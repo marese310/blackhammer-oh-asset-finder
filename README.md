@@ -19,6 +19,18 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\search_asset_gui.ps1"
 
 The app reads `OnceHuman_EnhancedDatabase.csv` beside the script. Manual asset entries are stored separately under `%LOCALAPPDATA%\OnceHumanAssetExplorer\manual_items.csv`.
 
+## Version 2.0 release
+
+The complete branded v2.0 source and Windows release are in [`Release_v2.0`](./Release_v2.0/). It includes the PowerShell GUI source, the Windows executable, the BlacHammer logo, and the WebView2 files needed for embedded online maps. The database is embedded in the v2.0 PowerShell script, so no additional CSV is required for that release.
+
+Run the v2.0 source from its directory with:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\OnceHumanAssetExplorer.ps1"
+```
+
+For embedded online maps, install the Microsoft Edge WebView2 Runtime. Refer to [`Release_v2.0/README.md`](./Release_v2.0/README.md) for v2.0 usage details.
+
 ## Build a standalone PowerShell script
 
 Run:
