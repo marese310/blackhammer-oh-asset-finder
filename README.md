@@ -31,6 +31,20 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\OnceHumanAssetExplore
 
 For embedded online maps, install the Microsoft Edge WebView2 Runtime. Refer to [`Release_v2.0/README.md`](./Release_v2.0/README.md) for v2.0 usage details.
 
+## Android app
+
+The native Android app is in [`android/`](./android/). It searches the bundled asset list offline, supports category and subcategory filters, shows asset details, and links to the BlacHammer Discord. On first launch it imports the included CSV into a local SQLite database; allow a short time for this one-time setup to finish. Once the Android build workflow finishes, download the APK from [GitHub Releases](https://github.com/marese310/blackhammer-oh-asset-finder/releases).
+
+To build a debug-installable APK, install JDK 17 and Android SDK platform 35/build tools 35.0.0, then run these commands from the `android` directory:
+
+```powershell
+.\gradlew.bat testDebugUnitTest assembleDebug
+```
+
+The APK is created at `android\app\build\outputs\apk\debug\app-debug.apk`. Copy it to an Android phone and install it. Depending on Android settings, allow installation from the browser or file manager that opens the APK. The APK is debug-signed for testing and direct sideloading, not a Play Store release.
+
+The GitHub Actions workflow can build an APK from the **Actions** tab; download it from the workflow run's artifacts. It requires explicitly confirming Google's Android SDK license agreement before the workflow installs the SDK. Review the agreement before selecting the confirmation. To also publish the APK as a GitHub Release, select the separate release option and provide a new release tag.
+
 ## Build a standalone PowerShell script
 
 Run:

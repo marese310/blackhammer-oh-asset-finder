@@ -1,7 +1,15 @@
 # Generated build output
 OnceHumanAssetExplorer_Standalone.ps1
 OnceHumanAssetExplorer.exe
+*.apk
 
 # Per-user data and temporary files
 manual_items.csv
 *.tmp
+
+# Android build output and local SDK paths
+android/.gradle/
+android/local.properties
+android/**/build/
+*.jks
+*.keystore
