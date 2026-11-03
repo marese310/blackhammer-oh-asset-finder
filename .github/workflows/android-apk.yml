@@ -14,7 +14,7 @@ on:
         type: boolean
         default: false
       release_tag:
-        description: "Git tag to create for the release, if publishing is enabled."
+        description: "Git tag without spaces, e.g. android-v1.0.0."
         required: true
         type: string
         default: android-v1.0.0
@@ -66,6 +66,18 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Validate release tag
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          if ! git check-ref-format "refs/tags/$RELEASE_TAG"; then
+            echo "::error::Invalid Git tag '$RELEASE_TAG'. Use a tag without spaces, such as android-v1.0.0."
+            exit 1
+          fi
+
       - name: Download the built APK
         uses: actions/download-artifact@v8
         with:
