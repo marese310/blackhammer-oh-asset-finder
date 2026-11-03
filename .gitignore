@@ -1,0 +1,7 @@
+# Generated build output
+OnceHumanAssetExplorer_Standalone.ps1
+OnceHumanAssetExplorer.exe
+
+# Per-user data and temporary files
+manual_items.csv
+*.tmp
