@@ -69,14 +69,20 @@ jobs:
       - name: Check out source
         uses: actions/checkout@v7
 
-      - name: Validate release tag
+      - name: Normalize and validate release tag
+        id: release-tag
         env:
           RELEASE_TAG: ${{ inputs.release_tag }}
         run: |
-          if ! git check-ref-format "refs/tags/$RELEASE_TAG"; then
-            echo "::error::Invalid Git tag '$RELEASE_TAG'. Use a tag without spaces, such as android-v1.0.0."
+          tag="$(printf '%s' "$RELEASE_TAG" | tr '[:space:]' '-' | sed -E 's/-+/-/g; s/^-//; s/-$//')"
+          if ! git check-ref-format "refs/tags/$tag"; then
+            echo "::error::Invalid Git tag '$RELEASE_TAG'. Use letters, numbers, dots, underscores, and hyphens."
             exit 1
           fi
+          if [ "$tag" != "$RELEASE_TAG" ]; then
+            echo "::notice::Using normalized release tag '$tag'."
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
 
       - name: Download the built APK
         uses: actions/download-artifact@v8
@@ -87,7 +93,7 @@ jobs:
       - name: Publish APK on GitHub Releases
         env:
           GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ inputs.release_tag }}
+          RELEASE_TAG: ${{ steps.release-tag.outputs.tag }}
         run: |
           gh release create "$RELEASE_TAG" release/app-debug.apk \
             --target "$GITHUB_SHA" \

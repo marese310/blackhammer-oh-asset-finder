@@ -43,7 +43,7 @@ To build a debug-installable APK, install JDK 17, Android SDK platform 35, and b
 
 The APK is created at `android\app\build\outputs\apk\debug\app-debug.apk`. Copy it to an Android phone and install it. Depending on Android settings, allow installation from the browser or file manager that opens the APK. The APK is debug-signed for testing and direct sideloading, not a Play Store release.
 
-The GitHub Actions workflow can build an APK from the **Actions** tab; download it from the workflow run's artifacts. It requires explicitly confirming Google's Android SDK license agreement before the workflow installs the SDK. Review the agreement before selecting the confirmation. To also publish the APK as a GitHub Release, select the separate release option and provide a valid Git tag without spaces, such as `android-v1.0.0`.
+The GitHub Actions workflow can build an APK from the **Actions** tab; download it from the workflow run's artifacts. It requires explicitly confirming Google's Android SDK license agreement before the workflow installs the SDK. Review the agreement before selecting the confirmation. To also publish the APK as a GitHub Release, select the separate release option and enter a release tag, such as `android-v1.0.0`. Spaces in the tag are automatically changed to hyphens.
 
 ## Build a standalone PowerShell script
 
