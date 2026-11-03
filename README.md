@@ -35,7 +35,7 @@ For embedded online maps, install the Microsoft Edge WebView2 Runtime. Refer to 
 
 The native Android app, **BlacHammer Once Human Asset Finder**, is in [`android/`](./android/). It searches the bundled asset list offline, supports category and subcategory filters, shows asset details, and links to the BlacHammer Discord. On first launch it imports the included CSV into a local SQLite database; allow a short time for this one-time setup to finish. Once the Android build workflow finishes, download the APK from [GitHub Releases](https://github.com/marese310/blackhammer-oh-asset-finder/releases).
 
-To build a debug-installable APK, install JDK 17, Android SDK platform 35, and build tools 34.0.0 and 35.0.0, then run these commands from the `android` directory:
+To build a debug-installable APK, install JDK 17, Android SDK platform 35, and build tools 36.0.0. The Gradle wrapper downloads Gradle 9.8.2 automatically. Run these commands from the `android` directory:
 
 ```powershell
 .\gradlew.bat testDebugUnitTest assembleDebug
