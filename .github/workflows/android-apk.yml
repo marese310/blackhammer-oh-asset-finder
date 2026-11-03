@@ -25,19 +25,19 @@ permissions:
 jobs:
   build:
     if: ${{ inputs.accept_android_sdk_licenses }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Java 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: "17"
 
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
         with:
           accept-android-sdk-licenses: true
 
@@ -45,16 +45,16 @@ jobs:
         run: sdkmanager "platforms;android-35" "build-tools;34.0.0" "build-tools;35.0.0"
 
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v6
 
       - name: Run unit tests and assemble APK
         run: ./gradlew --no-daemon testDebugUnitTest assembleDebug
         working-directory: android
 
       - name: Upload debug APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: blachammer-asset-finder-android
+          name: blachammer-once-human-asset-finder-android
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 30
@@ -62,14 +62,14 @@ jobs:
   publish-release:
     if: ${{ inputs.accept_android_sdk_licenses && inputs.publish_release }}
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
     steps:
       - name: Download the built APK
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
-          name: blachammer-asset-finder-android
+          name: blachammer-once-human-asset-finder-android
           path: release
 
       - name: Publish APK on GitHub Releases
@@ -79,5 +79,5 @@ jobs:
         run: |
           gh release create "$RELEASE_TAG" release/app-debug.apk \
             --target "$GITHUB_SHA" \
-            --title "BlacHammer Asset Finder $RELEASE_TAG" \
+            --title "BlacHammer Once Human Asset Finder $RELEASE_TAG" \
             --notes "Android APK for the BlacHammer Once Human Asset Finder. Download app-debug.apk and install it on your Android device. The first launch imports the offline asset database and can take a short time."
