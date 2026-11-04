@@ -49,7 +49,7 @@ public final class MainActivity extends Activity {
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
     private final List<AssetRecord> records = new ArrayList<>();
-    private final AssetAdapter assetAdapter = new AssetAdapter();
+    private AssetAdapter assetAdapter;
     private final Runnable debouncedSearch = this::refreshSearch;
 
     private AssetDatabase database;
@@ -71,6 +71,7 @@ public final class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        assetAdapter = new AssetAdapter();
         android.view.Window window = getWindow();
         window.setStatusBarColor(BACKGROUND);
         window.setNavigationBarColor(BACKGROUND);
